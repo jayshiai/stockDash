@@ -1,56 +1,42 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
+
 import { useState } from "react";
+
+import SidebarLink from "./Sidebar/SidebarLink";
+import SidebarLogo from "./Sidebar/SidebarLogo";
+
+import { RxDashboard } from "react-icons/rx";
+import { MdOutlineAnalytics } from "react-icons/md";
+import { AiOutlinePieChart } from "react-icons/ai";
+import { RiFileList3Line } from "react-icons/ri";
+import { TfiWallet } from "react-icons/tfi";
+
 const Sidebar = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
-  const links = ["Dashboard", "Portfolio", "Orders", "Wallet"];
+  const links = [
+    ["Dashboard", RxDashboard],
+    ["Analytics", MdOutlineAnalytics],
+    ["Portfolio", AiOutlinePieChart],
+    ["Orders", RiFileList3Line],
+    ["Wallet", TfiWallet],
+  ];
   return (
     <section
       className={`sticky top-0 hidden h-[100vh] ${
         toggleSidebar ? `w-[7vw]` : `w-[3vw]`
       } min-w-[75px] flex-col items-center  bg-black px-3 pb-[15vh] pt-6 text-white transition-all duration-500 sm:flex`}
+      onClick={() => setToggleSidebar(!toggleSidebar)}
+      onMouseLeave={() => setToggleSidebar(false)}
     >
-      <Link href="/" className="mb-2 flex flex-col items-center">
-        <Image
-          src="/assets/images/logo.svg"
-          alt="logo"
-          width={30}
-          height={30}
-          className="object-contain text-black"
-          onClick={() => setToggleSidebar(!toggleSidebar)}
-        />
-        <p
-          className={`transition-all duration-500 ${
-            toggleSidebar ? ` opacity-100` : `opacity-0`
-          }`}
-        >
-          StockDash
-        </p>
-      </Link>
+      <SidebarLogo toggleSidebar={toggleSidebar} />
       <div
         className={`transition-all duration-500 ${
-          toggleSidebar ? `translate-y-[200px]` : `translate-y-0`
+          toggleSidebar ? `translate-y-[15vh]` : `translate-y-0`
         }`}
+        onClick={(event) => event.stopPropagation()}
       >
-        {links.map((link) => (
-          <Link
-            href="/"
-            className={`group flex flex-col items-center transition-all hover:scale-110  ${
-              toggleSidebar ? `mb-10` : `mb-0`
-            }`}
-          >
-            <div className="h-[40px] w-[40px] rounded-xl bg-white"></div>
-            <p
-              className={`transition-all duration-500 ${
-                toggleSidebar
-                  ? `opacity-50  group-hover:opacity-100`
-                  : `opacity-0`
-              }`}
-            >
-              {link}
-            </p>
-          </Link>
+        {links.map(([link, Icon]) => (
+          <SidebarLink link={link} Icon={Icon} toggleSidebar={toggleSidebar} />
         ))}
       </div>
     </section>

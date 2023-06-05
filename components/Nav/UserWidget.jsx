@@ -15,9 +15,16 @@ const UserWidget = () => {
     })();
   }, []);
   return (
-    <div className="hidden min-w-[210px] sm:flex">
+    <div className="hidden min-w-[175px] sm:flex">
       {session?.user ? (
-        <div className="flex gap-3 md:gap-5">
+        <div className="flex w-full items-end justify-between">
+          <div
+            className="text-right text-white"
+            onMouseEnter={() => setToggleDropdown(true)}
+          >
+            <p className="">{session?.user.name}</p>
+            <p className="text-xs">$12.50</p>
+          </div>
           <Image
             src={session?.user.image}
             width={40}
@@ -26,21 +33,15 @@ const UserWidget = () => {
             alt="profile"
             onMouseEnter={() => setToggleDropdown(true)}
           />
-          <div
-            className="w-full rounded-xl bg-white px-5"
-            onMouseEnter={() => setToggleDropdown(true)}
-          >
-            <p>{session?.user.name}</p>
-            <p className="text-xs">$12.50</p>
-          </div>
+
           {toggleDropdown && (
             <div
-              className="dropdown"
+              className="dropdown glassmorphism"
               onMouseLeave={() => setToggleDropdown(false)}
             >
               <Link
                 href="/profile"
-                className="w-full text-center hover:scale-110"
+                className="w-full text-center text-white hover:scale-110"
                 onClick={() => setToggleDropdown(false)}
               >
                 My Profile
