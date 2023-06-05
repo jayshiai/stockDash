@@ -1,32 +1,42 @@
-import { use } from "react";
-import { NseIndia } from "stock-nse-india";
-const nseIndia = new NseIndia();
+"use client";
+import { useState, useEffect } from "react";
+
 const StockData = ({ symbol }) => {
-  let quote;
-  let textColor;
+  const [quote, setQuote] = useState(null);
+  let textColor = "text-green-400";
 
-  quote = use(
-    nseIndia.getEquityDetails(symbol).then((details) => {
-      return details.priceInfo;
-    })
-  );
+  const fetchData = async () => {
+    const response = await fetch(`/api/data/${symbol}`);
+    const data = await response.json();
+    setQuote(data);
+    console.log("retrieved");
+  };
+  useEffect(() => {
+    fetchData();
 
-  textColor = "text-green-400";
-  if (quote.change < 0) {
-    textColor = "text-red-400";
-  }
-  console.log(quote);
+    const interval = setInterval(() => fetchData(), 65000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="flex items-center justify-between gap-3">
-      <h1 className="rounded-2xl bg-white p-2">{symbol}</h1>
-      <div className="text-sm">
-        <p className="text-green-400">Price: {quote.lastPrice}</p>
-        <p className={textColor}>Change: {quote.change.toFixed(2)}</p>
-
-        {/* Add more fields as needed */}
-      </div>
-    </div>
+    <>
+      {quote ? (
+        <div className="flex items-center justify-between gap-3">
+          <h1 className="rounded-2xl bg-white p-2">{symbol}</h1>
+          <div className="text-sm">
+            <p className="text-green-400">Price: {quote.last}</p>
+            <p className={textColor}>
+              Change: {quote.percentChange.toFixed(2)}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <>
+          <p className="text-white">LOADING....</p>
+        </>
+      )}
+    </>
   );
 };
 

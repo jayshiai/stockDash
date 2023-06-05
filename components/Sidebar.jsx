@@ -8,13 +8,10 @@ const Sidebar = () => {
   return (
     <section
       className={`sticky top-0 hidden h-[100vh] ${
-        toggleSidebar ? `w-[10vw]` : `w-[5vw]`
-      } flex-col items-start justify-between bg-black  px-5 pb-[15vh] pt-6 text-white transition-all duration-500 sm:flex`}
+        toggleSidebar ? `w-[7vw]` : `w-[3vw]`
+      } min-w-[75px] flex-col items-center  bg-black px-3 pb-[15vh] pt-6 text-white transition-all duration-500 sm:flex`}
     >
-      <Link
-        href="/"
-        className="flex items-center justify-between gap-5 pb-[10vh]"
-      >
+      <Link href="/" className="mb-2 flex flex-col items-center">
         <Image
           src="/assets/images/logo.svg"
           alt="logo"
@@ -24,25 +21,38 @@ const Sidebar = () => {
           onClick={() => setToggleSidebar(!toggleSidebar)}
         />
         <p
-          className={`transition-all ${
-            toggleSidebar ? ` opacity-100 delay-200` : `opacity-0`
+          className={`transition-all duration-500 ${
+            toggleSidebar ? ` opacity-100` : `opacity-0`
           }`}
         >
           StockDash
         </p>
       </Link>
-      {links.map((link) => (
-        <Link href="/" className="flex items-center justify-between gap-5">
-          <div className="h-[40px] w-[40px] rounded-xl bg-white"></div>
-          <p
-            className={`transition-all ${
-              toggleSidebar ? ` opacity-100 delay-200` : `opacity-0`
+      <div
+        className={`transition-all duration-500 ${
+          toggleSidebar ? `translate-y-[200px]` : `translate-y-0`
+        }`}
+      >
+        {links.map((link) => (
+          <Link
+            href="/"
+            className={`group flex flex-col items-center transition-all hover:scale-110  ${
+              toggleSidebar ? `mb-10` : `mb-0`
             }`}
           >
-            {link}
-          </p>
-        </Link>
-      ))}
+            <div className="h-[40px] w-[40px] rounded-xl bg-white"></div>
+            <p
+              className={`transition-all duration-500 ${
+                toggleSidebar
+                  ? `opacity-50  group-hover:opacity-100`
+                  : `opacity-0`
+              }`}
+            >
+              {link}
+            </p>
+          </Link>
+        ))}
+      </div>
     </section>
   );
 };

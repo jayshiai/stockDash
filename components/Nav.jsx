@@ -7,7 +7,7 @@ const Nav = () => {
   return (
     <nav className="sticky top-0 flex h-[10vh] w-full items-center justify-between bg-black p-5">
       <Search />
-      <StockData symbol="IRCTC" />
+      <StockData symbol="NIFTY 50" />
       <UserWidget />
     </nav>
   );
