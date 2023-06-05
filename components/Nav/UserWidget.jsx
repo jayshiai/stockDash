@@ -17,7 +17,7 @@ const UserWidget = () => {
   return (
     <div className="hidden min-w-[210px] sm:flex">
       {session?.user ? (
-        <div className="flex cursor-pointer gap-3 md:gap-5">
+        <div className="flex gap-3 md:gap-5">
           <Image
             src={session?.user.image}
             width={40}
@@ -27,7 +27,7 @@ const UserWidget = () => {
             onMouseEnter={() => setToggleDropdown(true)}
           />
           <div
-            className="w-full cursor-pointer rounded-xl  bg-white px-5"
+            className="w-full rounded-xl bg-white px-5"
             onMouseEnter={() => setToggleDropdown(true)}
           >
             <p>{session?.user.name}</p>
